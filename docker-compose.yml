@@ -1,31 +1,30 @@
-version: "3.9"
-
+version: "1"
 services:
-  web:
+  api:
     build: ./src
-    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - ./src/:/usr/src/app/
     ports:
-      - 8002:8000
+      - 8000:8000
     environment:
       - DATABASE_URL=postgresql://flasede:flasede_admin@db/flasede_db
-      - DATABASE_HOSTNAME=postgres
+      - DATABASE_HOSTNAME=db
       - DATABASE_PORT=5432
-      - DATABASE_PASSWORD=flasede_admin
+      - DATABASE_PASSWORD=password123
       - DATABASE_NAME=flasede_db
-      - DATABASE_USERNAME=flasede
+      - DATABASE_USERNAME=postgres
       - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    depends_on:
+      - postgres
   db:
-    image: postgres:12.1-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+    image: postgres
     environment:
-      - POSTGRES_USER=flasede
-      - POSTGRES_PASSWORD=flasede_admin
+      - POSTGRES_PASSWORD=password123
       - POSTGRES_DB=flasede_db
-
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
 volumes:
-  postgres_data:
+  postgres-db:
