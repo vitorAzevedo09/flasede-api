@@ -1,0 +1,10 @@
+asyncpg
+databases[postgresql]
+fastapi
+SQLAlchemy
+uvicorn
+psycopg2
+
+# dev
+pytest
+requests
