@@ -17,6 +17,5 @@ docker-compose exec web pytest .
 #### Getting inside postgreSQL container
 
 ```docker
-docker-compose exec db psql --username=hello_fastapi --dbname=hello_fastapi_dev
+docker-compose exec db psql --username=flasede --dbname=flasede_db
 ```
-
