@@ -1,10 +1,8 @@
-asyncpg
-databases[postgresql]
 fastapi
 SQLAlchemy
 uvicorn
+email-validator
+passlib
+python-jose
 psycopg2
-
-# dev
-pytest
-requests
+python-multipart
