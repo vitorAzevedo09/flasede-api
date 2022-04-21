@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
   db:
-    image: postgres
+    image: postgres:alpine
     environment:
       - POSTGRES_PASSWORD=password123
       - POSTGRES_DB=flasede_db
