@@ -6,7 +6,6 @@ from typing import Optional
 class UserOut(BaseModel):
     id: int
     email: EmailStr
-    document: str
     created_at: datetime
 
     class Config:
