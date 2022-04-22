@@ -7,4 +7,6 @@ COPY alembic/ ./alembic
 COPY app/ ./app/
 COPY alembic.ini .
 COPY .env .
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY ./start.sh ./start.sh
+RUN chmod +x ./start.sh
+CMD ["./start.sh"]
