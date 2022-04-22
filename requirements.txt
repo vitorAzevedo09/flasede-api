@@ -6,3 +6,5 @@ passlib
 python-jose
 psycopg2
 python-multipart
+alembic
+pydantic[dotenv]
