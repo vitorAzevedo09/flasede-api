@@ -2,12 +2,10 @@ from fastapi import status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from .. import models, schemas, utils
 from ..database import get_db
+from typing import List, Optional
+from .. import oauth2
 
 router = APIRouter(prefix="/users", tags=['Users'])
-
-# /users/
-# /users
-
 
 @router.post(
     "/",
@@ -33,5 +31,18 @@ def get_user(
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with id: {id} does not exist")
-
     return user
+
+@router.get("/", response_model=List[schemas.UserOut])
+def get_users(db: Session = Depends(get_db),
+              current_user: int = Depends(oauth2.get_current_user),
+              search: Optional[str] = ""):
+    if not current_user.is_admin:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f"Permission Denied")
+    users = db.query(
+        models.User
+    ).filter(
+        models.User.first_name.contains(search)
+    ).all()
+    return users

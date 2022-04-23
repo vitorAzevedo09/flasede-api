@@ -3,7 +3,7 @@ services:
   api:
     build: .
     volumes:
-      - .:/usr/app/
+      - .:/usr/src/
     ports:
       - 8000:8000
     environment:
