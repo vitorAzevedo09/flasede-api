@@ -12,7 +12,7 @@ router = APIRouter(prefix="/users", tags=['Users'])
     status_code=status.HTTP_201_CREATED,
     response_model=schemas.UserOut,
 )
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     hashed_password = utils.hash(user.password)
     user.password = hashed_password
     new_user = models.User(**user.dict())
@@ -21,9 +21,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
 
+@router.get("/me",
+            response_model=schemas.UserOut)
+async def read_users_me(current_user: models.User = Depends(oauth2.get_current_user)):
+    return current_user
 
 @router.get('/{id}', response_model=schemas.UserOut)
-def get_user(
+async def get_user(
         id: int,
         db: Session = Depends(get_db),
 ):
@@ -33,16 +37,10 @@ def get_user(
                             detail=f"User with id: {id} does not exist")
     return user
 
+
 @router.get("/", response_model=List[schemas.UserOut])
-def get_users(db: Session = Depends(get_db),
-              current_user: int = Depends(oauth2.get_current_user),
-              search: Optional[str] = ""):
-    if not current_user.is_admin:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
-                            detail=f"Permission Denied")
+def get_payment_books(db: Session = Depends(get_db)):
     users = db.query(
         models.User
-    ).filter(
-        models.User.first_name.contains(search)
-    ).all()
+    ).order_by("first_name","last_name").all()
     return users

@@ -16,12 +16,16 @@ class User(Base):
     document = Column(String, nullable=False, unique=True)
     is_admin = Column(Boolean, default=False)
     password = Column(String, nullable=False)
+    birth_date = Column(TIMESTAMP(timezone=True),
+                        nullable=False,
+                        server_default=text('now()'))
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False,
                         server_default=text('now()'))
     logged_at = Column(TIMESTAMP(timezone=True),
                         nullable=False,
                         server_default=text('now()'))
+    payment_books = relationship("PaymentBook", back_populates="payer")
 
 
 class PaymentBook(Base):
@@ -36,16 +40,22 @@ class PaymentBook(Base):
     payer_id = Column(Integer,
                       ForeignKey("users.id", ondelete="CASCADE"),
                       nullable=False)
-    payer = relationship("User")
+    payer = relationship("User", back_populates="payment_books")
+    monthly_payments = relationship("MonthlyPayment", back_populates="payment_book")
 
 
 class MonthlyPayment(Base):
     ''' Mensalidade '''
     __tablename__ = "monthly_payments"
     id = Column(Integer, primary_key=True, nullable=False)
-    price = Column(Numeric, primary_key=True, nullable=False)
+    price = Column(Numeric, nullable=False)
+    month = Column(Integer,nullable=False)
+    is_payed = Column(Boolean, default=False)
+    created_at = Column(TIMESTAMP(timezone=True),
+                        nullable=False,
+                        server_default=text('now()'))
     payment_book_id = Column(Integer,
                              ForeignKey("payment_books.id",
                                         ondelete="CASCADE"),
                              nullable=False)
-    payment_book = relationship("PaymentBook")
+    payment_book = relationship("PaymentBook", back_populates="monthly_payments")
