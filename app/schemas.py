@@ -35,8 +35,7 @@ class PaymentBookCreate(BaseModel):
 
 class UserOut(BaseModel):
     id: int
-    first_name: str
-    last_name: str
+    name: str
     document: str
     is_admin: bool
     payment_books: list[PaymentBookOut] = list()
@@ -45,8 +44,7 @@ class UserOut(BaseModel):
         orm_mode = True
 
 class UserCreate(BaseModel):
-    first_name: str
-    last_name: str
+    name: str
     document: str
     password: str
     birth_date: datetime

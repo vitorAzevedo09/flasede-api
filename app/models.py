@@ -10,9 +10,7 @@ class User(Base):
     ''' Usuario '''
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, nullable=False)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    email = Column(String, nullable=True, unique=True)
+    name = Column(String, nullable=False)
     document = Column(String, nullable=False, unique=True)
     is_admin = Column(Boolean, default=False)
     password = Column(String, nullable=False)

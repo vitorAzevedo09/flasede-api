@@ -6,16 +6,6 @@ services:
       - .:/usr/src/
     ports:
       - 8000:8000
-    environment:
-      - DATABASE_URL=postgres://mlziqcqakckzch:f9f12a4a1352d5f81be01bc8b74e75afb291d98ccdc6105bd761ee3b3a802afc@ec2-44-199-143-43.compute-1.amazonaws.com:5432/dei1mjv3plsoq6
-      - DATABASE_HOSTNAME=ec2-44-199-143-43.compute-1.amazonaws.com
-      - DATABASE_PORT=5432
-      - DATABASE_PASSWORD=a1f65a374fd9fbe4e8284ae2e2df3b17f2b90adbf8fa932ee7aae7358c3477b4
-      - DATABASE_NAME=d38locqpc2t4q
-      - DATABASE_USERNAME=efbiwkfkbwdzkd
-      - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
-      - ALGORITHM=HS256
-      - ACCESS_TOKEN_EXPIRE_MINUTES=30
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
       - db
