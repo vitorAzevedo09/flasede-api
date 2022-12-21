@@ -4,7 +4,9 @@ uvicorn
 email-validator
 passlib
 python-jose
-psycopg2
+psycopg2-binary
 python-multipart
 alembic
 pydantic[dotenv]
+mangum
+bcrypt

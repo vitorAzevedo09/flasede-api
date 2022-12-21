@@ -42,5 +42,5 @@ async def get_user(
 def get_payment_books(db: Session = Depends(get_db)):
     users = db.query(
         models.User
-    ).order_by("first_name","last_name").all()
+    ).order_by("name").all()
     return users
