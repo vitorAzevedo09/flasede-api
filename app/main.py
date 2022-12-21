@@ -6,6 +6,9 @@ from mangum import Mangum
 
 app = FastAPI(
         title="flasede",
+        root_path="/prod",
+        docs_url="/docs",
+        openapi_url="/prod/openapi.json",
         )
 
 origins = ["*"]
@@ -13,7 +16,7 @@ origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
