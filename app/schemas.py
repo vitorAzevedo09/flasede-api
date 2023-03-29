@@ -33,6 +33,13 @@ class PaymentBookCreate(BaseModel):
     class Config:
         orm_mode = True
 
+
+class PaymentBookNewUserCreate(BaseModel):
+    year: int
+
+    class Config:
+        orm_mode = True
+
 class UserOut(BaseModel):
     id: int
     name: str
@@ -48,6 +55,7 @@ class UserCreate(BaseModel):
     document: str
     password: str
     birth_date: datetime
+    payment_book: PaymentBookNewUserCreate
 
 
 class UserLogin(BaseModel):

@@ -6,7 +6,6 @@ from mangum import Mangum
 
 app = FastAPI(
         title="flasede",
-        root_path="/prod",
         docs_url="/docs",
         openapi_url="/prod/openapi.json",
         )
